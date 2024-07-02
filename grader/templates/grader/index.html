@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Formative Cycle and View Students</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grader/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Tria el cicle formatiu i visualitza els estudiants</h1>
+        <form method="get" action=".">
+            <label for="cycle">Cicle formatiu:</label>
+            <select name="cycle" id="cycle" required>
+                <option value="">Tria el cicle formatiu</option>
+                {% for cycle in formative_cycles %}
+                    <option value="{{ cycle.id }}">{{ cycle.name }} ({{ cycle.course }})</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Mostrar estudiants</button>
+        </form>
+
+        {% if students %}
+            <h2>Estudiants</h2>
+            <ul>
+                {% for student in students %}
+                    <li><a href="{% url 'student_detail' student.id %}">{{ student.first_name }} {{ student.last_name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

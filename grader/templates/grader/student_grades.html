@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes estudiants</title>
+</head>
+<body>
+    <h1>Student Grades</h1>
+    {% for student_data in student_grades %}
+        <h2>{{ student_data.student.first_name }} {{ student_data.student.last_name }}</h2>
+        <ul>
+            {% for module_data in student_data.modules %}
+                <li>
+                    <strong>Mòdul:</strong> {{ module_data.module.name }}
+                    <ul>
+                        {% for grade in module_data.grades %}
+                            <li>
+                                <strong>RA:</strong> {{ grade.learning_outcome.name }} -
+                                <strong>Nota:</strong> {{ grade.grade }}
+                            </li>
+                        {% endfor %}
+                        <li><strong>Average Grade:</strong> {{ module_data.average_grade }}</li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>

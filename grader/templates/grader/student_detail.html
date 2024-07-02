@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes de {{ student.first_name }} {{ student.last_name }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grader/detail_styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Notes de {{ student.first_name }} {{ student.last_name }}</h1>
+            <a class="back-link" href="{% url 'index' %}">Torna enrere</a>
+        </div>
+        {% for module_data in module_grades %}
+            <h2>Mòdul: {{ module_data.module.name }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%;">Codi RA</th>
+                        <th>RA</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in module_data.grades %}
+                        <tr>
+                            <td style="width: 15%;">{{ grade.learning_outcome.code }}</td>
+                            <td>{{ grade.learning_outcome.name }}</td>
+                            <td>{{ grade.grade }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td style="width: 15%;"><strong>Nota mitjana</strong></td>
+                        <td><strong></strong></td>
+                        {% if module_data.average_grade > 5 %}
+                            <td><strong style="color: green;">{{ module_data.average_grade }}</strong></td>
+                        {% else %}
+                            <td><strong style="color: red;">{{ module_data.average_grade }}</strong></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
+</body>
+</html>
